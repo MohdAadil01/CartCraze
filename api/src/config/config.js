@@ -1,8 +1,8 @@
-import config from "dotenv";
+import { config } from "dotenv";
 
 config();
 
-const _config = {
+let _config = {
   PORT: process.env.PORT,
 };
 
