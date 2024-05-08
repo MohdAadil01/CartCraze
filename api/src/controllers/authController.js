@@ -50,6 +50,7 @@ export const register = async (req, res, next) => {
       );
     }
   } catch (error) {
+    console.log(error);
     return next(createHttpError(500, "Error in finding the user."));
   }
   try {
@@ -68,9 +69,37 @@ export const register = async (req, res, next) => {
       user: newUser,
     });
   } catch (error) {
+    console.log(error);
     return next(createHttpError(500, "Error in Registering the user."));
   }
 };
-export const login = async (req, res) => {
-  res.send("hi");
+
+export const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(createHttpError(400, "Please Enter all fields."));
+  }
+  try {
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      return next(
+        createHttpError(400, "No user found. Please register first.")
+      );
+    }
+
+    const isPasswordSame = bcrypt.compareSync(password, foundUser.password);
+
+    if (!isPasswordSame) {
+      return next(createHttpError(400, "Invalid Credentials"));
+    }
+
+    res.status(200).json({
+      message: "Successfully Logged In",
+      user: foundUser,
+    });
+  } catch (error) {
+    console.log(error);
+    return next(createHttpError(400, "Error in Login in."));
+  }
 };
