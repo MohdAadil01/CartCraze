@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import createHttpError from "http-errors";
 import User from "../models/User.js";
+import { generateToken } from "../middlewares/jwt.js";
 
 export const register = async (req, res, next) => {
   const { username, email, password, address, phone } = req.body;
@@ -69,9 +70,13 @@ export const register = async (req, res, next) => {
       phone,
     });
 
+    const token = generateToken(email);
+    res.cookie("user", token);
+
     res.status(200).json({
       message: "Successfully Registered.",
       user: newUser,
+      cookie: token,
     });
   } catch (error) {
     console.log(error);
@@ -99,6 +104,8 @@ export const login = async (req, res, next) => {
       return next(createHttpError(400, "Invalid Credentials"));
     }
 
+    let token = generateToken(foundUser.email);
+    res.cookie("user", token);
     res.status(200).json({
       message: "Successfully Logged In",
       user: foundUser,
