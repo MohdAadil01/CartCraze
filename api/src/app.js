@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import ErrorHandler from "./middlewares/ErrorHandler.js";
 import authRoute from "./routes/authRoute.js";
+import profileRoute from "./routes/profileRoute.js";
+import { verifyToken } from "./middlewares/jwt.js";
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/user", verifyToken, profileRoute);
 
 app.use(ErrorHandler);
 export default app;
