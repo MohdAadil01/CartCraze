@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import createHttpError from "http-errors";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import config from "../config/config.js";
 import { generateToken } from "../middlewares/jwt.js";
 
 export const register = async (req, res, next) => {
@@ -104,7 +106,8 @@ export const login = async (req, res, next) => {
       return next(createHttpError(400, "Invalid Credentials"));
     }
 
-    let token = generateToken(foundUser.email);
+    let token = await generateToken(foundUser.email);
+    // const token = jwt.sign({ user: foundUser.email }, config.JWT_SECRET_KEY);
     res.cookie("token", token);
     res.status(200).json({
       message: "Successfully Logged In",
