@@ -1,12 +1,18 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import ErrorHandler from "./middlewares/ErrorHandler.js";
 import authRoute from "./routes/authRoute.js";
 import profileRoute from "./routes/profileRoute.js";
 import { verifyToken } from "./middlewares/jwt.js";
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 app.use(express.json());
