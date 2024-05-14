@@ -26,7 +26,7 @@ app.get("/", (req, res, next) => {
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", verifyToken, profileRoute);
-app.use("/api/v1/product", productRoute);
+app.use("/api/v1/products", productRoute);
 
 app.use(ErrorHandler);
 export default app;
