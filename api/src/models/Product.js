@@ -7,6 +7,11 @@ const productSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   category: { type: String, required: true },
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+  panelDetails: {
+    panelColor: { type: String },
+    textColor: { type: String },
+    backgroundColor: { type: String },
+  },
 });
 
 const Product = mongoose.model("Product", productSchema);
