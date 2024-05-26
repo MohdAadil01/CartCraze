@@ -177,6 +177,12 @@ export const updateProduct = async (req, res, next) => {
   const { id } = req.params;
 
   try {
+    const foundProduct = await Product.findById(id);
+    if (!foundProduct) {
+      return next(
+        createHttpError(500, "Product is not found in the database. ")
+      );
+    }
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
       {
