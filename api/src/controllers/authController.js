@@ -4,6 +4,10 @@ import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 import { generateToken } from "../middlewares/jwt.js";
+import cloudinary from "../config/cloudinary.js";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 
 export const register = async (req, res, next) => {
   const { username, email, password, address, phone } = req.body;
@@ -61,7 +65,25 @@ export const register = async (req, res, next) => {
     console.log(error);
     return next(createHttpError(500, "Error in finding the user."));
   }
+
   try {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    const profileImage = req.file;
+
+    const filePath = path.resolve(
+      __dirname,
+      "../../public/images/uploads/" + profileImage.filename
+    );
+
+    const uploadResult = await cloudinary.uploader.upload(filePath, {
+      public_id: path.parse(profileImage.filename).name,
+      folder: "user-images",
+      filename_override: profileImage.filename,
+      resource_type: "image",
+    });
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
@@ -70,7 +92,10 @@ export const register = async (req, res, next) => {
       password: hashedPassword,
       address,
       phone,
+      profile: uploadResult.secure_url,
     });
+
+    fs.unlinkSync(filePath);
 
     const token = generateToken(email);
 
