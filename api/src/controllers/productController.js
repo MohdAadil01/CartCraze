@@ -37,7 +37,6 @@ export const create = async (req, res, next) => {
         filename_override: productImages[i].filename,
         resource_type: "image",
       });
-      // console.log("uploaded" + JSON.stringify(imageUploadResult));
       productImagesCloudinaryURL.push(imageUploadResult.secure_url);
       fs.unlinkSync(filePath);
     }
@@ -57,7 +56,27 @@ export const create = async (req, res, next) => {
   } = req.body;
 
   try {
-  } catch (error) {}
-
-  res.send("Create your products " + productImagesCloudinaryURL);
+    const newProduct = await Product.create({
+      name,
+      description,
+      price,
+      quantity,
+      category,
+      panelDetails: {
+        panelColor,
+        textColor,
+        backgroundColor,
+      },
+      productImages: productImagesCloudinaryURL,
+    });
+    res.json({
+      success: true,
+      message: "Product created.",
+      newProduct,
+    });
+  } catch (error) {
+    return next(
+      createHttpError(500, "Error while creating new product. " + error)
+    );
+  }
 };
