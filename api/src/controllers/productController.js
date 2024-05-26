@@ -80,3 +80,23 @@ export const create = async (req, res, next) => {
     );
   }
 };
+
+export const getAllProducts = async (req, res, next) => {
+  res.send("all");
+};
+
+export const getSingleProduct = async (req, res, next) => {
+  res.send("single");
+};
+
+export const updateProduct = async (req, res, next) => {
+  res.send("update");
+};
+
+export const deleteProduct = async (req, res, next) => {
+  res.send("delete");
+};
+
+export const deleteAllProduct = async (req, res, next) => {
+  res.send("delete all");
+};

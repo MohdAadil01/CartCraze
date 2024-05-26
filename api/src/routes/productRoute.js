@@ -1,7 +1,14 @@
 import express from "express";
 import { upload } from "../middlewares/multer.js";
 import { verifyToken } from "../middlewares/jwt.js";
-import { create } from "../controllers/productController.js";
+import {
+  create,
+  deleteAllProduct,
+  deleteProduct,
+  getAllProducts,
+  getSingleProduct,
+  updateProduct,
+} from "../controllers/productController.js";
 const router = express.Router();
 
 router.post(
@@ -12,16 +19,23 @@ router.post(
 );
 
 // *GET A SINGLE PRODUCT
+router.get("/product/:id", getSingleProduct);
+
 // *GET ALL PRODUCTS
+router.get("/all", getAllProducts);
+
 // *UPDATE PRODUCT
+router.put("/product/:id", updateProduct);
+
 // *DELETE PRODUCT
+router.delete("/product/:id", deleteProduct);
+
+// *DELETE PRODUCT
+router.delete("/all", deleteAllProduct);
+
 // *GET FILTERED PRODUCT
+
 // *ADD A REVIEW FOR PRODUCT
 // *GET ALL REVIEWS OF PRODUCT
-// *
-// *
-// *
-// *
-// *
 
 export default router;
