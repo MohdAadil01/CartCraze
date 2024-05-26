@@ -3,9 +3,11 @@ import User from "../models/User.js";
 
 export const create = async (req, res, next) => {
   const user = req.user;
+  console.log(user);
   const foundUser = await User.findOne({ email: user });
   if (!foundUser.isAdmin) {
-    return next(createHttpError(500, "You can not access to this page."));
+    return next(createHttpError(500, "Unauthorized."));
   }
-  res.send("Create your products");
+  const { name } = req.body;
+  res.send("Create your products " + name);
 };

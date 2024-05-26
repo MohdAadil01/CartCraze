@@ -73,12 +73,13 @@ export const register = async (req, res, next) => {
     });
 
     const token = generateToken(email);
-    res.cookie("token", token);
+    // res.cookie("token", token);
 
     res.status(200).json({
+      success: true,
       message: "Successfully Registered.",
+      token: `Bearer ${token}`,
       user: newUser,
-      cookie: token,
     });
   } catch (error) {
     console.log(error);
@@ -107,9 +108,10 @@ export const login = async (req, res, next) => {
     }
 
     let token = await generateToken(foundUser.email);
-    // const token = jwt.sign({ user: foundUser.email }, config.JWT_SECRET_KEY);
     res.cookie("token", token);
     res.status(200).json({
+      success: true,
+      token: `Bearer ${token}`,
       message: "Successfully Logged In",
       user: foundUser,
     });

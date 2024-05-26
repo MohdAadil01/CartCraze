@@ -14,10 +14,11 @@ export const generateToken = async (data) => {
 
 export const verifyToken = (req, res, next) => {
   try {
-    if (!req.cookies.token) {
+    let authHeader = req.headers.authorization || req.headers.Authorization;
+    if (!authHeader) {
       return next(createHttpError(500, "Please login/Signup first."));
     }
-    const token = req.cookies.token;
+    const token = authHeader.split(" ")[1];
     let decodedData = jwt.verify(token, config.JWT_SECRET_KEY);
     req.user = decodedData.user;
     next();
