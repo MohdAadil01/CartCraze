@@ -83,6 +83,7 @@ export const register = async (req, res, next) => {
       filename_override: profileImage.filename,
       resource_type: "image",
     });
+    fs.unlinkSync(filePath);
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -94,8 +95,6 @@ export const register = async (req, res, next) => {
       phone,
       profile: uploadResult.secure_url,
     });
-
-    fs.unlinkSync(filePath);
 
     const token = generateToken(email);
 
