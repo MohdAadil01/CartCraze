@@ -73,7 +73,6 @@ export const register = async (req, res, next) => {
     });
 
     const token = generateToken(email);
-    // res.cookie("token", token);
 
     res.status(200).json({
       success: true,
@@ -108,7 +107,6 @@ export const login = async (req, res, next) => {
     }
 
     let token = await generateToken(foundUser.email);
-    res.cookie("token", token);
     res.status(200).json({
       success: true,
       token: `Bearer ${token}`,

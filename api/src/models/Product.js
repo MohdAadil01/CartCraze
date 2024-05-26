@@ -12,6 +12,12 @@ const productSchema = new mongoose.Schema({
     textColor: { type: String },
     backgroundColor: { type: String },
   },
+  productImages: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
 });
 
 const Product = mongoose.model("Product", productSchema);

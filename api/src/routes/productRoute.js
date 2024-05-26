@@ -1,12 +1,15 @@
 import express from "express";
-import multer from "multer";
+import { upload } from "../middlewares/multer.js";
 import { verifyToken } from "../middlewares/jwt.js";
 import { create } from "../controllers/productController.js";
 const router = express.Router();
 
-const upload = multer();
-
-router.post("/product/create", verifyToken, upload.none(), create);
+router.post(
+  "/product/create",
+  verifyToken,
+  upload.array("productImages", 3),
+  create
+);
 
 // *GET A SINGLE PRODUCT
 // *GET ALL PRODUCTS

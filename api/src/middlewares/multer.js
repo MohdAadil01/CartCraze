@@ -1,5 +1,6 @@
 import multer from "multer";
 import crypto from "crypto";
+// import crypto from "node:crypto";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -21,7 +22,7 @@ const storage = multer.diskStorage({
       path.extname(file.originalname) !== ".jpg" &&
       path.extname(file.originalname) !== ".png"
     ) {
-      return new Error("Profile image should be jpeg, jpg or png");
+      return new Error("Image should be .jpeg, .jpg or .png");
     }
 
     crypto.randomBytes(12, (err, bytes) => {
