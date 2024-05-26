@@ -25,13 +25,18 @@ router.get("/product/:id", getSingleProduct);
 router.get("/all", getAllProducts);
 
 // *UPDATE PRODUCT
-router.put("/product/:id", updateProduct);
+router.put(
+  "/product/:id",
+  verifyToken,
+  upload.array("productImages", 3),
+  updateProduct
+);
 
 // *DELETE PRODUCT
-router.delete("/product/:id", deleteProduct);
+router.delete("/product/:id", verifyToken, deleteProduct);
 
 // *DELETE PRODUCT
-router.delete("/all", deleteAllProduct);
+router.delete("/all", verifyToken, deleteAllProduct);
 
 // *GET FILTERED PRODUCT
 
