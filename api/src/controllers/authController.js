@@ -42,12 +42,6 @@ export const register = async (req, res, next) => {
     );
   }
 
-  if (address.length < 5 || address.length > 100) {
-    return next(
-      createHttpError(400, "Address must be between 5 and 100 characters long.")
-    );
-  }
-
   if (!phoneRegex.test(phone)) {
     return next(
       createHttpError(400, "Please provide a valid 10-digit phone number.")
