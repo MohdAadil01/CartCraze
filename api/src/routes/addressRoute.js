@@ -5,11 +5,12 @@ import {
   getAddress,
   updateAddress,
 } from "../controllers/addressController.js";
+import { verifyToken } from "../middlewares/jwt.js";
 const router = express.Router();
 
-router.post("/create", createAddress);
-router.get("/get", getAddress);
-router.put("/update", updateAddress);
-router.delete("/delete", deleteAddress);
+router.post("/create", verifyToken, createAddress);
+router.get("/get/:id", verifyToken, getAddress);
+router.put("/update/:id", verifyToken, updateAddress);
+router.delete("/delete/:id", verifyToken, deleteAddress);
 
 export default router;

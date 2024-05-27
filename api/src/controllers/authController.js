@@ -10,8 +10,8 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 
 export const register = async (req, res, next) => {
-  const { username, email, password, address, phone } = req.body;
-  if (!username || !email || !password || !address || !phone) {
+  const { username, email, password, phone } = req.body;
+  if (!username || !email || !password || !phone) {
     return next(createHttpError(400, "Please Enter all fields."));
   }
 
@@ -85,12 +85,11 @@ export const register = async (req, res, next) => {
       username,
       email,
       password: hashedPassword,
-      address,
       phone,
       profile: uploadResult.secure_url,
     });
 
-    const token = generateToken(email);
+    const token = await generateToken(email);
 
     res.status(200).json({
       success: true,
