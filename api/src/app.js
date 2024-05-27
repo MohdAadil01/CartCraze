@@ -8,6 +8,7 @@ import ErrorHandler from "./middlewares/ErrorHandler.js";
 import authRoute from "./routes/authRoute.js";
 import profileRoute from "./routes/profileRoute.js";
 import productRoute from "./routes/productRoute.js";
+import addressRoute from "./routes/addressRoute.js";
 import { verifyToken } from "./middlewares/jwt.js";
 
 const app = express();
@@ -25,8 +26,9 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/user", verifyToken, profileRoute);
+app.use("/api/v1/address", addressRoute);
 app.use("/api/v1/products", productRoute);
+app.use("/api/v1/user", verifyToken, profileRoute);
 
 app.use(ErrorHandler);
 export default app;
