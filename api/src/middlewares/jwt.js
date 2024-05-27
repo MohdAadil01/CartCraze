@@ -4,7 +4,9 @@ import createHttpError from "http-errors";
 
 export const generateToken = async (data) => {
   try {
-    let token = jwt.sign({ user: data }, config.JWT_SECRET_KEY);
+    let token = jwt.sign({ user: data }, config.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
     return token;
   } catch (error) {
     console.log(error);
