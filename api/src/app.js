@@ -11,6 +11,7 @@ import productRoute from "./routes/productRoute.js";
 import addressRoute from "./routes/addressRoute.js";
 import reviewRoute from "./routes/reviewRoute.js";
 import cartRoute from "./routes/cartRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 import { verifyToken } from "./middlewares/jwt.js";
 
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/v1/address", addressRoute);
 app.use("/api/v1/products", productRoute);
 app.use("/api/v1/products/product", reviewRoute);
 app.use("/api/v1/cart", cartRoute);
+app.use("/api/v1/orders", orderRoute);
 app.use("/api/v1/user", verifyToken, profileRoute);
 
 app.use(ErrorHandler);

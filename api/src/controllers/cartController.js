@@ -94,7 +94,6 @@ export const getCartItems = async (req, res, next) => {
     return next(createHttpError(500, "Failed to get item from cart"));
   }
 };
-
 export const updateCart = async (req, res, next) => {
   const { productId, quantity } = req.body;
   try {
@@ -108,7 +107,6 @@ export const updateCart = async (req, res, next) => {
     }
 
     const cart = await Cart.findOne({ user: user._id });
-    console.log(cart);
     if (!cart) {
       return next(createHttpError(500, "Your cart is empty!"));
     }
