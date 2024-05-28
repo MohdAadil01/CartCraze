@@ -39,7 +39,6 @@ router.delete("/product/:id", verifyToken, deleteProduct);
 router.delete("/all", verifyToken, deleteAllProduct);
 
 // *GET FILTERED PRODUCT
-
 // *ADD A REVIEW FOR PRODUCT
 // *GET ALL REVIEWS OF PRODUCT
 
