@@ -4,13 +4,13 @@ import {
   getCartItems,
   removeFromCart,
   updateCart,
-} from "../controllers/cartController";
-import verifyToken from "../middlewares/jwt.js";
+} from "../controllers/cartController.js";
+import { verifyToken } from "../middlewares/jwt.js";
 const router = express.Router();
 
-router.post("/:userId", verifyToken, addToCart);
-router.get("/:userId", verifyToken, getCartItems);
-router.put("/:userId/:productId", verifyToken, updateCart);
-router.delete("/:userId/:productId", verifyToken, removeFromCart);
+router.post("/", verifyToken, addToCart);
+router.get("/", verifyToken, getCartItems);
+router.put("/", verifyToken, updateCart);
+router.delete("/", verifyToken, removeFromCart);
 
 export default router;
